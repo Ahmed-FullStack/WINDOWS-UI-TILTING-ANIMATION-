@@ -1,0 +1,157 @@
+:root {
+	--cubic-bezier: cubic-bezier(0.4, 0, 0.2, 1);
+	--br-200: 1rem;
+	--scrollbar-thumb-bg: hsl(0 0% 70%);
+	--scrollbar-thumb-bg-hover: hsl(0 0% 60%);
+	--scrollbar-thumb-bg-active: hsl(0 0% 50%);
+}
+:root.dark {
+	--clr: hsl(0 0% 100%);
+	--bg-clr: hsl(0 0% 2% / 1);
+	--btn-default-clr: hsl(0 0% 7% / 1);
+	--btn-default-clr-hover: hsl(0 0% 3% / 1);
+	--card-bg: hsl(0 0% 3.5%);
+	--card-bg-hover: hsl(0 0% 6.5%);
+}
+:root.light {
+	--clr: hsl(0 0% 0%);
+	--bg-clr: hsl(0 0% 100% / 1);
+	--btn-default-clr: hsl(0 0% 97% / 1);
+	--btn-default-clr-hover: hsl(0 0% 93% / 1);
+	--card-bg: hsl(0 0% 97.5%);
+	--card-bg-hover: hsl(0 0% 95.5%);
+}
+:root.firefox-animate * {
+	transition: background 350ms var(--cubic-bezier),
+		color 350ms var(--cubic-bezier) !important;
+}
+
+.body-cover {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: var(--body-height);
+	z-index: 555555;
+}
+
+@media (prefers-reduced-motion) {
+	.root-firefox-animate * {
+		transition: none;
+	}
+}
+
+:is(:root.animate *) {
+	transition: background 250ms var(--cubic-bezier),
+		color 30ms var(--cubic-bezier) !important;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+body {
+	background-color: var(--bg-clr);
+	color: var(--clr);
+	min-height: 100vh;
+	font-family: 'Google Sans Display', Helvetica, sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+div,
+a {
+	font-family: 'Google Sans Display', Helvetica, sans-serif;
+	user-select: none;
+}
+a {
+	color: var(--clr);
+	text-decoration: none;
+}
+
+button {
+	border: none;
+	outline: none;
+	padding: 0.5rem 1rem;
+}
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+	gap: 1rem;
+}
+.hero-section {
+	margin: 5rem 0 0;
+}
+.container {
+	width: min(1200px, 90%);
+	margin: 0 auto;
+}
+button {
+	font-size: 0.9rem;
+	background-color: var(--btn-default-clr);
+	color: var(--clr);
+	border-radius: 5rem;
+}
+button:hover {
+	background-color: var(--btn-default-clr-hover);
+}
+.card {
+	position: relative;
+	transform-style: preserve-3d;
+	transform: perspective(55rem) rotateX(var(--x-deg)) rotateY(var(--y-deg));
+	background-color: var(--card-bg);
+	padding: 1rem;
+	aspect-ratio: 1 / 0.65;
+	outline-color: hsl(0 0% 100% / 0.2);
+	transition: transform 120ms var(--cubic-bezier),
+		scale 500ms var(--cubic-bezier), background-color 200ms var(--cubic-bezier),
+		outline 200ms var(--cubic-bezier);
+}
+.card:hover {
+	background-color: var(--card-bg-hover);
+	outline: var(--border-effect-width) solid hsl(0 0% 100% / 0.15);
+}
+
+.card.active {
+	scale: 0.99;
+}
+.card-title {
+	margin-top: 0.3rem;
+}
+/* Utilities Classes */
+
+.br-200 {
+	border-radius: var(--br-200);
+}
+[selectable] {
+	user-select: auto;
+}
+
+.margin-top-200 {
+	margin-top: 4rem;
+}
+::-webkit-scrollbar {
+	width: 0.9rem;
+}
+::-webkit-scrollbar-track {
+	background-color: var(--bg-clr);
+}
+::-webkit-scrollbar-thumb {
+	border-radius: 2rem;
+	background-color: var(--scrollbar-thumb-bg);
+	border: 3px solid var(--bg-clr);
+}
+::-webkit-scrollbar-thumb:hover {
+	border-radius: 2rem;
+	background-color: var(--scrollbar-thumb-bg-hover);
+	border: 3px solid var(--bg-clr);
+}
+::-webkit-scrollbar-thumb:active {
+	border-radius: 2rem;
+	background-color: var(--scrollbar-thumb-bg-active);
+	border: 3px solid var(--bg-clr);
+}

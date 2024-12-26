@@ -1,0 +1,74 @@
+:root {
+	--cubic-bezier: cubic-bezier(0.4, 0, 0.2, 1);
+}
+:where(.ripple) {
+	--mdc-ripple-duration-wms: 230;
+
+	--mdc-ripple-opacity-duration-wms: 350;
+	--mdc-ripple-opacity-duration: calc(
+		var(--mdc-ripple-opacity-duration-wms) * 1ms
+	);
+	--mdc-ripple-duration: calc(var(--mdc-ripple-duration-wms) * 1ms);
+	--mdc-ripple-bg: radial-gradient(
+		closest-side,
+		hsl(0 0% 50%) max(100% - 65px, 95%),
+		transparent 100%
+	);
+	--mdc-ripple-blur: none;
+
+	display: inline-block;
+	position: relative;
+	z-index: 1;
+}
+
+.mdc-ripple,
+.mdc-ripple-wave {
+	position: absolute;
+}
+
+.mdc-ripple {
+	display: inline-block;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: inherit;
+	overflow: hidden;
+	z-index: -1;
+	pointer-events: none;
+}
+
+.mdc-ripple-wave {
+	top: var(--y, 0%);
+	left: var(--x, 0%);
+	width: var(--max-value);
+	height: var(--max-value);
+	background: var(--mdc-ripple-bg);
+	opacity: 0.4;
+	border-radius: 50%;
+	filter: var(--mdc-ripple-blur);
+}
+
+.mdc-ripple-wave-animation {
+	animation: paper-ripple var(--mdc-ripple-duration, 200ms) var(--cubic-bezier)
+		forwards;
+}
+
+.mdc-ripple-wave-opacity-animation {
+	opacity: 0;
+	transition: opacity var(--mdc-ripple-opacity-duration) ease-out;
+}
+
+@keyframes paper-ripple {
+	0% {
+		scale: 0.3;
+		background: transparent;
+	}
+	100% {
+		top: 50%;
+		left: 50%;
+		background: var(--mdc-ripple-bg);
+
+		translate: -50% -50%;
+		scale: var(--mdc-ripple-scale, 1);
+	}
+}

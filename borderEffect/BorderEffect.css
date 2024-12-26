@@ -1,0 +1,101 @@
+.border-effect {
+	--border-effect-width: 0.2px;
+	--border-double-width: calc(var(--border-effect-width) * 2);
+	position: relative;
+	isolation: isolate;
+	z-index: 12;
+}
+
+:root.dark {
+	--blur-first-layer-bg: hsl(0 0% 30% / 0.2);
+	--blur-second-layer-bg: hsl(0 0% 20% / 0.15);
+	--border-first-layer-bg: hsl(0 0% 100% / 0.2);
+}
+:root.light {
+	--blur-first-layer-bg: hsl(0 0% 30% / 0.1);
+	--blur-second-layer-bg: hsl(0 0% 20% / 0.07);
+	--border-first-layer-bg: hsl(0 0% 0% / 0.2);
+}
+.border-effect-border {
+	width: calc(100% + calc(var(--border-double-width) * 2));
+	height: calc(100% + calc(var(--border-double-width) * 2));
+	z-index: -25;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+.border-effect-border,
+.border-effect-border::before {
+	background-color: inherit;
+	border-radius: inherit;
+}
+
+.border-effect-border::before,
+.border-effect-border::after {
+	content: '';
+}
+
+.border-effect-border,
+.blur-layer,
+.border-effect-border::before,
+.border-effect-border::after {
+	position: absolute;
+	margin: 0;
+	inset: 0;
+}
+@media (hover: hover) {
+	.border-effect:hover > .border-effect-border.initialize > .blur-layer {
+		pointer-events: none;
+		top: var(--border-effect-y, 0%);
+		left: var(--border-effect-x, 0%);
+		background-image: radial-gradient(
+			circle,
+			var(--blur-first-layer-bg),
+			var(--blur-second-layer-bg) 50%
+		);
+		width: 80%;
+		aspect-ratio: 1 / 1;
+		border-radius: 50%;
+		z-index: 2;
+		translate: -50% -50%;
+		filter: blur(2.5rem);
+		animation: scale-in 200ms var(--cubic-bezier);
+	}
+}
+.border-effect-border::before {
+	width: calc(var(--parent-width) - calc(var(--border-double-width) * 2));
+	height: calc(var(--parent-height) - calc(var(--border-double-width) * 2));
+	margin: auto;
+	z-index: 1;
+}
+.border-effect-border.initialize::after {
+	top: var(--border-effect-y, 0%);
+	left: var(--border-effect-x, 0%);
+	width: 65%;
+	aspect-ratio: 1 / 1;
+	background-image: radial-gradient(
+		circle,
+		var(--border-first-layer-bg),
+		transparent 75%
+	);
+	border-radius: 50%;
+	z-index: -1;
+	translate: -50% -50%;
+}
+:is(
+		:root.animate .border-effect-border,
+		:root.animate .border-effect-border > *,
+		:root.firefox-animate .border-effect-border,
+		:root.firefox-animate .border-effect-border > *,
+
+	) {
+	transition: 0ms !important;
+}
+@keyframes scale-in {
+	0% {
+		scale: 0.58;
+	}
+	100% {
+		scale: 1;
+	}
+}
